@@ -19,3 +19,4 @@ class AlumnoAdmin(admin.ModelAdmin):
         'last_name',
         'idSalon',
         )
+
