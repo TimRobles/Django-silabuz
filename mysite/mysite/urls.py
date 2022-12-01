@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from myapp.views import index_view
+from myapp.views import form_view, index_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path("", index_view, name="home"),
     path("", index_view.as_view(), name="home"),
+    path("formulario/", form_view.as_view(), name="formulario"),
 ]
