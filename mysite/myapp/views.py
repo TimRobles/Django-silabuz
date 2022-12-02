@@ -39,45 +39,40 @@ class index_view(View):
         return HttpResponse("Index POST")
 
 
-# class form_view(View):
-#     template = "form.html"
-#     contexto = {}
+class form_view(View):
+    template = "form.html"
+    contexto = {}
+    contexto['form'] = InputForm()
 
-#     def get(self, request):
-#         form_get = InputForm(request.GET)
-#         form_post = InputForm(request.POST)
-#         self.contexto['form_get'] = form_get
-#         self.contexto['form_post'] = form_post
-#         return render(
-#             request=request,
-#             template_name=self.template,
-#             context=self.contexto
-#             )
+    def get(self, request):
+        if request.GET:
+            return redirect(aula_view, aula= request.GET["aula"], horario=request.GET["hora_entrada"])
+        return render(
+            request=request,
+            template_name=self.template,
+            context=self.contexto
+            )
 
-#     def post(self, request):
-#         print("POST")
-#         form_get = InputForm(request.GET)
-#         form_post = InputForm(request.POST)
-#         self.contexto['form_get'] = form_get
-#         self.contexto['form_post'] = form_post
-#         print(form_post.cleaned_data['aula'])
-#         return render(
-#             request=request,
-#             template_name=self.template,
-#             context=self.contexto
-#             )
+    def post(self, request):
+        if request.POST:
+            return redirect(aula_view, aula= request.POST["aula"], horario=request.POST["hora_entrada"])
+        return render(
+            request=request,
+            template_name=self.template,
+            context=self.contexto
+            )
 
 def aula_view(request, aula, horario):
     return HttpResponse(f"El parámetro enviado por URL es {aula}, {horario}")
 
 
-def form_view(request):
-    if request.method == "POST":
-        form = InputForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data["aula"])
-            return redirect(aula_view, aula= form.cleaned_data["aula"], horario=form.cleaned_data["hora_entrada"])
+# def form_view(request):
+#     if request.method == "POST":
+#         form = InputForm(request.POST)
+#         if form.is_valid():
+#             print(form.cleaned_data["aula"])
+#             return redirect(aula_view, aula= form.cleaned_data["aula"], horario=form.cleaned_data["hora_entrada"])
 
-    context = {}
-    context['form']= InputForm()
-    return render(request, "form.html", context)
+#     context = {}
+#     context['form']= InputForm()
+#     return render(request, "form.html", context)

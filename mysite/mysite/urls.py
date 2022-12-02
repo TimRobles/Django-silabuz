@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path("", index_view, name="home"),
     path("", index_view.as_view(), name="home"),
-    # path("formulario/", form_view.as_view(), name="formulario"),
-    path("formulario/", form_view, name="formulario"),
+    path("formulario/", form_view.as_view(), name="formulario"),
+    # path("formulario/", form_view, name="formulario"),
     path("formulario/<aula>/<horario>", aula_view, name="aula")
 ]

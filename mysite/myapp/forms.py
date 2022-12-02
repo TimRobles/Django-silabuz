@@ -6,3 +6,5 @@ class InputForm(forms.Form):
             help_text='Ingrese la hora en formato HH:MM',
             label='Hora de la Entrada'
         )
+
+    
