@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from myapp.forms import InputForm
+from myapp.forms import AlumnoForm, InputForm
 
 # Create your views here.
 
@@ -45,8 +45,16 @@ class form_view(View):
     contexto['form'] = InputForm()
 
     def get(self, request):
+        print("Formulario GET")
+        print(request.session)
         if request.GET:
-            return redirect(aula_view, aula= request.GET["aula"], horario=request.GET["hora_entrada"])
+            print(request.GET)
+            print(request.GET.get('aula'))
+            print(request.GET['aula'])
+            print(request.GET['hora_entrada'])
+        if request.GET:
+            request.session["hora_entrada"] = request.GET['hora_entrada']
+            return redirect(aula_view, aula= request.GET["aula"])
         return render(
             request=request,
             template_name=self.template,
@@ -54,16 +62,23 @@ class form_view(View):
             )
 
     def post(self, request):
+        print("Formulario POST")
         if request.POST:
-            return redirect(aula_view, aula= request.POST["aula"], horario=request.POST["hora_entrada"])
+            print(request.POST)
+            print(request.POST.get('aula'))
+            print(request.POST['hora_entrada'])
+        if request.POST:
+            request.session["hora_entrada"] = request.POST['hora_entrada']
+            return redirect(aula_view, aula= request.POST["aula"])
         return render(
             request=request,
             template_name=self.template,
             context=self.contexto
             )
 
-def aula_view(request, aula, horario):
-    return HttpResponse(f"El parámetro enviado por URL es {aula}, {horario}")
+def aula_view(request, aula):
+    hora_entrada = request.session["hora_entrada"]
+    return HttpResponse(f"El parámetro enviado por URL es {aula} y recibimos del request el horario en {hora_entrada}")
 
 
 # def form_view(request):
@@ -76,3 +91,37 @@ def aula_view(request, aula, horario):
 #     context = {}
 #     context['form']= InputForm()
 #     return render(request, "form.html", context)
+
+def alumno_view(request, alumno):
+    apellido = 'Vacio'
+    try:
+        apellido = request.session['apellido']
+    except:
+        pass
+    try:
+        salon = request.session['salon']
+    except:
+        salon = 'Vacio'
+    return HttpResponse(f"Datos del alumno:<br>Nombre: {alumno}<br>Apellido:{apellido}<br>Salon:{salon}")
+
+class form_alumno(View):
+    template = 'form alumno.html'
+    contexto = {}
+    contexto['form'] = AlumnoForm()
+    def get(self, request):
+        return render(
+            request=request,
+            template_name=self.template,
+            context=self.contexto,
+            )
+
+    def post(self, request):
+        print(request.POST)
+        print(request.POST['last_name'])
+        print(request.POST['idSalon'])
+        print(request.session)
+        request.session['apellido'] = request.POST['last_name']
+        request.session['salon'] = request.POST['idSalon']
+        print(request.session['apellido'])
+        print(request.session['salon'])
+        return redirect(alumno_view, alumno=request.POST['first_name'])

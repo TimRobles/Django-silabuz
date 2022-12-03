@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from myapp.views import aula_view, form_view, index_view
+from myapp.views import alumno_view, aula_view, form_alumno, form_view, index_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,8 @@ urlpatterns = [
     path("", index_view.as_view(), name="home"),
     path("formulario/", form_view.as_view(), name="formulario"),
     # path("formulario/", form_view, name="formulario"),
-    path("formulario/<aula>/<horario>", aula_view, name="aula")
+    path("formulario/<aula>/", aula_view, name="aula"),
+    
+    path("formAlum/", form_alumno.as_view(), name="formulario_alumno"),
+    path("formAlum/<alumno>/", alumno_view, name="alumno"),
 ]

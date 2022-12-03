@@ -7,13 +7,7 @@
     <title>Formulario</title>
 </head>
 <body>
-    <h1>Fomulario GET</h1>
-    <form action="" method="get">
-        {{ form.as_p }}
-        <input type="submit" value="Enviar">
-    </form>
-
-    <h1>Fomulario POST</h1>
+    <h1>Fomulario Alumno</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
