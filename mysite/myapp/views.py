@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 
-from myapp.forms import AlumnoForm, InputForm
+from myapp.forms import AlumnoForm, InputForm, ProfesorForm
 
 # Create your views here.
 
@@ -116,12 +116,35 @@ class form_alumno(View):
             )
 
     def post(self, request):
-        print(request.POST)
-        print(request.POST['last_name'])
-        print(request.POST['idSalon'])
-        print(request.session)
         request.session['apellido'] = request.POST['last_name']
         request.session['salon'] = request.POST['idSalon']
-        print(request.session['apellido'])
-        print(request.session['salon'])
         return redirect(alumno_view, alumno=request.POST['first_name'])
+
+
+def profesor_view(request, profesor):
+    apellido_prof = 'Vacio'
+    try:
+        apellido_prof = request.session['apellido_prof']
+    except:
+        pass
+    try:
+        salario = request.session['salario']
+    except:
+        salario = 'Vacio'
+    return HttpResponse(f"Datos del profesor:<br>Nombre: {profesor}<br>Apellido:{apellido_prof}<br>Salario:{salario}")
+
+class form_profesor(View):
+    template = 'form profesor.html'
+    contexto = {}
+    contexto['form'] = ProfesorForm()
+    def get(self, request):
+        return render(
+            request=request,
+            template_name=self.template,
+            context=self.contexto,
+            )
+
+    def post(self, request):
+        request.session['apellido_prof'] = request.POST['last_name']
+        request.session['salario'] = request.POST['salario']
+        return redirect(profesor_view, profesor=request.POST['first_name'])

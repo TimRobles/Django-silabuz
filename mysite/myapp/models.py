@@ -37,7 +37,7 @@ class Salon(models.Model):
 
 
 class Profesor(Persona):
-    
+    salario = models.IntegerField()
     class Meta:
         constraints = [
             models.UniqueConstraint(
