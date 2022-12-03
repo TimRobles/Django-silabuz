@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from myapp.views import alumno_view, aula_view, form_alumno, form_profesor, form_view, index_view, profesor_view
+from vitrina.views import BooksListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +32,7 @@ urlpatterns = [
 
     path("formProf/", form_profesor.as_view(), name="formulario_profesor"),
     path("formProf/<profesor>/", profesor_view, name="profesor"),
+
+    path("booklist/", BooksListView.as_view(), name="booklist"),
+
 ]

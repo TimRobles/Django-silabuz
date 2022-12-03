@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Lista de Libros
+{% endblock titulo %}
+
+
+{% block contenido %}
+<h1>Lista de Libros</h1>
+<ul>
+    {% for libro in libros %}
+    <div style='background-color:{% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}'>
+        <li>{{ forloop.counter0 }}</li>
+        <li>{{ libro.title }}</li>
+        <li>{{ libro.authors }}</li>
+    </div>
+    <hr/>
+    {% empty %}
+    <li>No hay objetos.</li>
+    {% endfor %}    
+</ul>
+{% endblock contenido %}
