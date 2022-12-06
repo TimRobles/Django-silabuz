@@ -6,6 +6,12 @@ Lista de Libros
 
 
 {% block contenido %}
+
+{% load cache %}
+{% cache 500 sidebar %}
+    .. sidebar ..
+{% endcache %}
+
 <h1>Lista de Libros</h1>
 <ul>
     {% for libro in libros %}

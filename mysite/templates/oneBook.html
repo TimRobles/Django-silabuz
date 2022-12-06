@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<ul>
+
+<li>{{book.title}}</li> 
+<li><a href="{% url 'vitrina:onlyAuthor' book.id %}">{{book.authors}}</a></li>
+<li>{{book.average_rating}}</li>
+<li>{{book.isbn}}</li>
+<a href="{{ url_prueba }}">Formulario</a>
+
+</ul>
+{% endblock %}

@@ -21,7 +21,7 @@ from vitrina.views import BooksListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('myapp/', include('myapp.urls')),
     path('vitrina/', include('vitrina.urls')),
+    path('myapp/', include('myapp.urls')),
 
 ]
