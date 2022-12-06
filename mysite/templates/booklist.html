@@ -11,8 +11,17 @@ Lista de Libros
     {% for libro in libros %}
     <div style='background-color:{% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}'>
         <li>{{ forloop.counter0 }}</li>
+        
+        {% filter lower %}
         <li>{{ libro.title }}</li>
-        <li>{{ libro.authors }}</li>
+        {% endfilter %}
+        
+        
+        {% if libro.authors|length <= 30 %}
+        <li>{{ libro.authors|lower }}</li>
+        <li>Tamaño del autor: {{ libro.authors|length }}</li>
+        {% endif %}
+            
     </div>
     <hr/>
     {% empty %}
