@@ -7,7 +7,11 @@
 <li><a href="{% url 'vitrina:onlyAuthor' book.id %}">{{book.authors}}</a></li>
 <li>{{book.average_rating}}</li>
 <li>{{book.isbn}}</li>
-<a href="{{ url_prueba }}">Formulario</a>
-
 </ul>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
 {% endblock %}
